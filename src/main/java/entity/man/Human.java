@@ -1,25 +1,27 @@
 package entity.man;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import lombok.Getter;
-import lombok.Setter;
 
-@Setter
 @Getter
 public abstract class Human {
-    private String firstName;
-    private String secondName;
-    private String middleName;
+    private final String firstName;
+    private final String secondName;
+    private final String middleName;
+    private final String placeOfBirth;
     private int age;
-    private Role role;
 
-    public Human() {
-    }
-
-    public Human(String firstName, String secondName, String middleName, int age, Role role) {
+    public Human(String firstName, String secondName, String middleName, String placeOfBirth, int age) {
+        checkArgument(age > 0, "Age cannot be negative.");
         this.firstName = firstName;
         this.secondName = secondName;
         this.middleName = middleName;
+        this.placeOfBirth = placeOfBirth;
         this.age = age;
-        this.role = role;
+    }
+
+    public void setAge(int age) {
+        checkArgument(age > 0, "Age cannot be negative.");
+        this.age = age;
     }
 }

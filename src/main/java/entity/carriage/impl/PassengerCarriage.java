@@ -3,10 +3,12 @@ package entity.carriage.impl;
 import entity.carriage.Carriage;
 import entity.man.Human;
 import entity.man.impl.Passenger;
+import lombok.EqualsAndHashCode;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@EqualsAndHashCode
 public class PassengerCarriage extends Carriage {
     private static final int SETS = 3;
     private List<Human> passengers = new ArrayList<>();
@@ -16,12 +18,12 @@ public class PassengerCarriage extends Carriage {
         super(numberOfWheels);
     }
 
-    public static PassengerCarriage ofPassengerCarriage(int numberOfWheels){
+    public static PassengerCarriage of(int numberOfWheels){
         return new PassengerCarriage(numberOfWheels);
     }
 
-    public boolean addPassenger(Human human) {
-        if (human instanceof Passenger && occupiedSeats + 1 <= SETS) {
+    public boolean addPassenger(Passenger human) {
+        if (occupiedSeats + 1 <= SETS) {
             passengers.add(human);
             occupiedSeats++;
             return true;

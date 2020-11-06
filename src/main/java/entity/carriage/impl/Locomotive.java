@@ -1,9 +1,10 @@
 package entity.carriage.impl;
 
 import entity.carriage.Carriage;
-import entity.man.Human;
 import entity.man.impl.Driver;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode
 public class Locomotive extends Carriage {
     private Driver driver;
 
@@ -11,13 +12,13 @@ public class Locomotive extends Carriage {
         super(numberOfWheels);
     }
 
-    public static Locomotive ofLocomotive(int numberOfWheels) {
+    public static Locomotive of(int numberOfWheels) {
         return new Locomotive(numberOfWheels);
     }
 
-    public boolean setDriver(Human human) {
-        if (human instanceof Driver) {
-            driver = (Driver) human;
+    public boolean setDriver(Driver driver) {
+        if (driver.getAge() > 18) {
+            this.driver = driver;
             return true;
         }
         return false;

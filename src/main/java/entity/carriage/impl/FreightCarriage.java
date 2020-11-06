@@ -2,27 +2,47 @@ package entity.carriage.impl;
 
 import entity.cargo.Cargo;
 import entity.carriage.Carriage;
+import lombok.EqualsAndHashCode;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@EqualsAndHashCode
 public class FreightCarriage extends Carriage {
-    private static final float MAX_TOTAL_WEIGHT = 1000f;
+    private static final double DEFAULT_WEIGHT = 1000;
     private List<Cargo> cargos = new ArrayList<>();
-    private float totalWeight = 0;
+    private final double maxTotalWeight;
 
     private FreightCarriage(int numberOfWheels){
         super(numberOfWheels);
+        this.maxTotalWeight = DEFAULT_WEIGHT;
     }
 
-    public static FreightCarriage ofFreightCarriage(int numberOfWheels) {
+    private FreightCarriage(int numberOfWheels, double maxTotalWeight){
+        super(numberOfWheels);
+        this.maxTotalWeight = maxTotalWeight;
+    }
+
+    public static FreightCarriage of(int numberOfWheels) {
         return new FreightCarriage(numberOfWheels);
     }
 
+    public static FreightCarriage of(int numberOfWheels, double maxTotalWeight) {
+        return new FreightCarriage(numberOfWheels, maxTotalWeight);
+    }
+
     public boolean addCargo(Cargo cargo) {
-        if (totalWeight + cargo.getWeight() <= MAX_TOTAL_WEIGHT) {
+        double weight = cargos.stream().mapToDouble(Cargo::getWeight).sum();
+        if (weight + cargo.getWeight() <= maxTotalWeight) {
             cargos.add(cargo);
-            totalWeight += cargo.getWeight();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeCargo(Cargo cargo) {
+        if (cargos.contains(cargo)){
+            cargos.remove(cargo);
             return true;
         }
         return false;

@@ -1,15 +1,19 @@
 package entity.train;
 
-import com.google.common.base.Preconditions;
+import static com.google.common.base.Preconditions.checkArgument;
 import entity.carriage.Carriage;
 import entity.carriage.impl.Locomotive;
 import entity.man.impl.Driver;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Train {
     private static final int NUMBER_OF_LOCOMOTIVE_WHEELS = 14;
-    private final Locomotive locomotive = Locomotive.ofLocomotive(NUMBER_OF_LOCOMOTIVE_WHEELS);
+    private final Locomotive locomotive = Locomotive.of(NUMBER_OF_LOCOMOTIVE_WHEELS);
     private Carriage head;
     private Carriage lastCarriage;
+    private List<Carriage> carriages = new ArrayList<>();
 
     private Train(Driver driver) {
         locomotive.setDriver(driver);
@@ -17,27 +21,30 @@ public class Train {
         lastCarriage = head;
     }
 
-    public static Train ofTrain(Driver driver){
+    public static Train of(Driver driver){
         return new Train(driver);
     }
 
-    // I wanted to check Preconditions :)
     public boolean addCarriage(Carriage carriage) {
-        Preconditions.checkArgument(!(carriage instanceof Locomotive), "The train already has a locomotive.");
-        Preconditions.checkArgument(carriage.getHead() == null && carriage.getTail() == null, "Carriage must be alone.");
+        checkArgument(carriage != null, "Carriage cannot be null");
+        checkArgument(!(carriage instanceof Locomotive), "The train already has a locomotive.");
+        checkArgument(carriage.getHead() == null && carriage.getTail() == null, "Carriage must be alone.");
         lastCarriage.setTail(carriage);
         carriage.setHead(lastCarriage);
         lastCarriage = carriage;
         return true;
     }
 
-    public void printTrain() {
+    public List<Carriage> getFullTrain() {
+        if (!carriages.isEmpty()) {
+            carriages.clear();
+        }
         Carriage currentCarriage = head;
-        int counter = 0;
         System.out.println("Train:");
         while (currentCarriage != null) {
-            System.out.println("Carriage [" + ++counter + "]: " + currentCarriage);
+            carriages.add(currentCarriage);
             currentCarriage = currentCarriage.getTail();
         }
+        return List.copyOf(carriages);
     }
 }

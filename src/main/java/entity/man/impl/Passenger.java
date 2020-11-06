@@ -7,7 +7,6 @@ import static com.google.common.base.Preconditions.checkArgument;
 public class Passenger extends Human {
     private final int numberOfTicket;
 
-
     private Passenger(String firstName, String secondName, String middleName, String placeOfBirth, int age, int numberOfTicket) {
         super(firstName, secondName, middleName, placeOfBirth, age);
         this.numberOfTicket = numberOfTicket;

@@ -18,7 +18,7 @@ class FreightCarriageTest {
     }
 
     @Test
-    @DisplayName("Adding cargo with a suitable weight")
+    @DisplayName("Adding cargo with a suitable weight (total weight <= 1000)")
     void addCargo_addCargoToListOfCargos_true() {
         Cargo firstCargo = Cargo.builder()
                 .destination(Destination.MOSCOW)
@@ -35,7 +35,7 @@ class FreightCarriageTest {
     }
 
     @Test
-    @DisplayName("Adding cargo with an unsuitable weight")
+    @DisplayName("Adding cargo with an unsuitable weight (total weight > 1000)")
     void addCargo_addCargoToListOfCargos_false() {
         Cargo firstCargo = Cargo.builder()
                 .destination(Destination.MOSCOW)

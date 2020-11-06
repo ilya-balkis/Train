@@ -36,6 +36,7 @@ class TrainTest {
     @Test
     @DisplayName("Adding locomotive into train")
     void addCarriage_addLocomotiveToTrain_exception() throws IllegalArgumentException {
+        //Train already has locomotive
         Throwable thrown = assertThrows(IllegalArgumentException.class, () -> {
             train.addCarriage(locomotive);
         });
@@ -52,6 +53,7 @@ class TrainTest {
     @Test
     @DisplayName("Adding not empty carriage into train")
     void addCarriage_addNotEmptyCarriageToTrain_exception() throws IllegalArgumentException {
+        //Carriage must be alone
         PassengerCarriage firstCarriage = PassengerCarriage.of(16);
         PassengerCarriage secondCarriage = PassengerCarriage.of(16);
 

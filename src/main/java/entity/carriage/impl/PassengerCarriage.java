@@ -22,9 +22,9 @@ public class PassengerCarriage extends Carriage {
         return new PassengerCarriage(numberOfWheels);
     }
 
-    public boolean addPassenger(Passenger human) {
+    public boolean addPassenger(Passenger passenger) {
         if (occupiedSeats + 1 <= SETS) {
-            passengers.add(human);
+            passengers.add(passenger);
             occupiedSeats++;
             return true;
         }
